@@ -21,6 +21,7 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
     var name = ["Lion","Cat","Dog","Girafe","Elephant","Rabbit","Tiger","Turtle","Bear"]
     var randomName = ""
     var optionalName = "Squirrel"
+    var optionalName2 = "Gorilla"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,7 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
         scoreLabel.layer.cornerRadius = 20
         timeOutBar.progress = 1.0
         time.invalidate()
-        //timeLine()
+        timeLine()
         images = images.shuffled()
         name = name.shuffled()
         //randomImage = images.randomElement()!
@@ -61,13 +62,14 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     func displayBox()
     {
-        let alert = UIAlertController(title: "GAME OVER", message: "Score = \(score) Highscore = \(highScore)", preferredStyle: .alert)
+        scoring()
+        let alert = UIAlertController(title: "GAME OVER", message: "Score = \(score)\n Highscore = \(highScore)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Restart", style: .default, handler: { _ in
             self.score = 0
             self.scoreLabel.text = "\(self.score)"
-            //self.timeLine()
-            //self.images = self.images.shuffled()
-            //self.name = self.name.shuffled()
+            self.timeLine()
+            self.images = self.images.shuffled()
+            self.name = self.name.shuffled()
             self.collectionView.reloadData()
         }))
         alert.addAction(UIAlertAction(title: "Home", style: .default, handler: { _ in
@@ -87,27 +89,28 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
         {
             cell.img.image = images[indexPath.row]
             cell.nameLabel.text = images[indexPath.row]?.animalName
-            print("randomname = ",randomName)
-            print("imageName = ",images[indexPath.row]?.animalName)
+//            print("randomname = ",randomName)
+//            print("imageName = ",images[indexPath.row]?.animalName)
             //cell.nameLabel.text = name[indexPath.row]
-        }else{
+        }
+        else
+        {
             if randomName == name[indexPath.row]
             {
                 cell.img.image = images[indexPath.row]
-                cell.nameLabel.text = "\(name[indexPath.row])"
+                cell.nameLabel.text = optionalName
+            }
+            else if images[indexPath.row]?.animalName == name[indexPath.row]
+            {
+               cell.img.image = images[indexPath.row]
+               cell.nameLabel.text = "\(optionalName2)"
             }
             else
             {
-                if name[indexPath.row] == randomName
-                {
-                    cell.nameLabel.text = optionalName
-                }
-                else
-                {
-                    cell.img.image = images[indexPath.row]
-                    cell.nameLabel.text = "\(name[indexPath.row])"
-                }
+               cell.img.image = images[indexPath.row]
+               cell.nameLabel.text = "\(name[indexPath.row])"
             }
+            
         }
         cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 1
@@ -116,16 +119,21 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if images[indexPath.row]!.animalName == name[indexPath.row]
+        if images[indexPath.row]!.animalName == randomName
+        //if name[indexPath.row] == images[indexPath.row]!.animalName
+        //if name[indexPath.row] == randomName
         {
-            //timeLine()
+//            print("randomname = ",randomName)
+//            print("imageName = ",images[indexPath.row]?.animalName)
+//            print("RightName = ",name[indexPath.row])
+            timeLine()
             score+=1
             scoreLabel.text = "\(score)"
             images = images.shuffled()
             name = name.shuffled()
             collectionView.reloadData()
+            randomName = name.randomElement()!
             
-            print("RightName = ",name[indexPath.row])
         }
         else
         {
@@ -144,7 +152,7 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
         if highScore <= score
         {
             highScore = score
-            UserDefaults.standard.set(self.scoreLabel.text!, forKey: "highpoint")
+            //UserDefaults.standard.set(self.scoreLabel.text!, forKey: "highpoint")
             highScoreLabel.text = "\(highScore)"
         }
     }
