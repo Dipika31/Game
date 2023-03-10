@@ -31,7 +31,7 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
         scoreLabel.layer.cornerRadius = 20
         timeOutBar.progress = 1.0
         time.invalidate()
-        timeLine()
+        //timeLine()
         images = images.shuffled()
         name = name.shuffled()
         //randomImage = images.randomElement()!
@@ -74,7 +74,7 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
         }))
         alert.addAction(UIAlertAction(title: "Home", style: .default, handler: { _ in
            
-            self.navigationController?.popToViewController((self.navigationController?.viewControllers[0])!,animated: true)
+            self.navigationController?.popToViewController((self.navigationController?.viewControllers[0])!,animated: false)
         }))
         present(alert, animated: true, completion: nil)
     }
@@ -120,12 +120,7 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if images[indexPath.row]!.animalName == randomName
-        //if name[indexPath.row] == images[indexPath.row]!.animalName
-        //if name[indexPath.row] == randomName
         {
-//            print("randomname = ",randomName)
-//            print("imageName = ",images[indexPath.row]?.animalName)
-//            print("RightName = ",name[indexPath.row])
             timeLine()
             score+=1
             scoreLabel.text = "\(score)"
@@ -143,7 +138,7 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 107, height: 129)
+        return CGSize(width: 107, height: 120)
     }
     
     
@@ -153,7 +148,7 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
         {
             highScore = score
             //UserDefaults.standard.set(self.scoreLabel.text!, forKey: "highpoint")
-            highScoreLabel.text = "\(highScore)"
+            highScoreLabel.text = "High Score : \(highScore)"
         }
     }
 }
