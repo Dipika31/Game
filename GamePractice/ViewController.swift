@@ -10,7 +10,6 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var loaderProgressBar: UIProgressView!
     var a = 0.0
     
     override func viewDidLoad() {
