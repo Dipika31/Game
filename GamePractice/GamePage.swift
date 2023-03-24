@@ -35,9 +35,6 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
         scoreLabel.layer.borderWidth = 1
         scoreLabel.layer.masksToBounds = true
         scoreLabel.layer.cornerRadius = 20
-        lifeLine1.image = UIImage(systemName: "heart.fill")
-        lifeLine2.image = UIImage(systemName: "heart.fill")
-        lifeLine3.image = UIImage(systemName: "heart.fill")
         timeOutBar.progress = 1.0
         time.invalidate()
         timeLine()
@@ -78,6 +75,7 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
             self.lifeLine2.image = UIImage(systemName: "heart.fill")
             self.lifeLine3.image = UIImage(systemName: "heart.fill")
             self.score = 0
+            self.life = 1
             self.scoreLabel.text = "\(self.score)"
             self.timeLine()
             self.images = self.images.shuffled()
@@ -133,39 +131,33 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
             randomName = name.randomElement()!
             
         }
-//        else
-//        {
-//            if life == 1
-//            {
-//                lifeLine1.image = UIImage(systemName: "heart")
-//                life+=1
-//                life = UserDefaults.standard.integer(forKey: "life")
-//                collectionView1.reloadData()
-//            }
-//            else
-//            {
-//                lifeLine1.image = UIImage(systemName: "heart")
-//                life+=1
-//                life = UserDefaults.standard.integer(forKey: "life")
-//                collectionView1.reloadData()
-//            }
-//                        else if  life = 3{
-//                lifeLine1.image = UIImage(systemName: "heart")
-//                life+=1
-//                life = UserDefaults.standard.integer(forKey: "life")
-//                collectionView.reloadData()
-//            }
-//            else
-//            {
-//                displayBox()
-//                self.time.invalidate()
-//            }
-//
-//        }
-                else {
-                    displayBox()
-                    self.time.invalidate()
-                }
+        else if life == 1
+        {
+            lifeLine1.image = UIImage(systemName: "heart")
+            life+=1
+            timeLine()
+            images = images.shuffled()
+            name = name.shuffled()
+            collectionView1.reloadData()
+            randomName = name.randomElement()!
+        }
+        else if life == 2
+        {
+            lifeLine2.image = UIImage(systemName: "heart")
+            life+=1
+            timeLine()
+            images = images.shuffled()
+            name = name.shuffled()
+            collectionView1.reloadData()
+            randomName = name.randomElement()!
+        }
+        else
+        {
+            lifeLine3.image = UIImage(systemName: "heart")
+            life+=1
+            displayBox()
+            self.time.invalidate()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
