@@ -173,12 +173,6 @@ class GamePage: UIViewController, UICollectionViewDelegate, UICollectionViewData
             UserDefaults.standard.set(score, forKey: "highScore")
         }
     }
-    
-    
-    //    func didSelect()
-    //    {
-    //
-    // }
 }
 
 extension UIImage
